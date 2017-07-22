@@ -1,0 +1,18 @@
+* {
+  outline: none;
+  font-family: $main-font;
+  color: $black;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+    height:100%;
+}
+
+html {
+  font-size: 16px;
+}

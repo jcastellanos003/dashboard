@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "6"
+sudo: false
+dist: trusty
+env:
+  - TRAVIS_BUILD_NUMBER=0.0.1
+notifications:
+  email:
+    recipients:
+      - jcastellanos003@gmail.com
+    on_success: never
+    on_failure: always

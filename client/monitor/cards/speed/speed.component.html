@@ -1,0 +1,12 @@
+<tile
+    [template]="speedTemplate"
+    [footerInfo]="tileInfo">
+    <ng-template #speedTemplate>
+        <div class="cards-info card-speed">
+            <gauge
+                [config]="gaugeConfig"
+                [value]="currentSpeed">
+            </gauge>
+        </div>
+    </ng-template>
+</tile>

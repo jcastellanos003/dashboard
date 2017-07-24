@@ -1,0 +1,20 @@
+@import '../../../assets/css/variables';
+
+.card-connection {
+    background-color: $connection-color;
+    justify-content: center;
+}
+
+.card-connection__status-info {
+    font-size: 4rem;
+}
+
+.card-connection__status-footer {
+    color: $gray;
+    font-size: .9rem;
+}
+
+.card-connection__img {
+    width: 25px;
+    vertical-align: middle;
+}

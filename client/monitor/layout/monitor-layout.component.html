@@ -1,0 +1,23 @@
+<section class="monitor">
+    <speed
+        [currentSpeed]="currentSpeed">
+    </speed>
+    <altitude
+        [currentAltitude]="currentAltitude">
+    </altitude>
+    <switch
+        [tileInfo]="gearInfo"
+        (onToggleSwitch)="toggleGearLanding($event)">
+    </switch>
+    <gear
+        [tileInfo]="gearInfo">
+    </gear>
+    <flaps
+        [flapPosition]="flapPosition"
+        (onFlapChange)="flapChange($event)">
+    </flaps>
+    <div>
+        <connection-status></connection-status>
+        <statistics></statistics>
+    </div>
+</section>

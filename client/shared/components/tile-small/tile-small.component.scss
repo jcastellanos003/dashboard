@@ -1,0 +1,20 @@
+@import '../../../assets/css/variables';
+
+.tile-small {
+    margin: 5px;
+    width: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    height: 150px;
+    max-height: 150px;
+    min-height: 150px;
+    overflow: hidden;
+    border-radius: $small-radius;
+    background: $white;
+}
+
+.tile-small__content {
+    margin: 0 auto;
+    height: 100%;
+    max-height: 150px;
+}

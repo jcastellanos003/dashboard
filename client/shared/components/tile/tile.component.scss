@@ -1,0 +1,25 @@
+@import '../../../assets/css/variables';
+
+.tile {
+    margin: 5px;
+    width: 300px;
+    max-width: 300px;
+    min-width: 300px;
+    height: 310px;
+    max-height: 310px;
+    min-height: 310px;
+    overflow: hidden;
+    border-radius: $small-radius;
+    background: $white;
+}
+
+.tile__content {
+    margin: 0 auto;
+    height: 250px;
+    max-height: 250px;
+}
+
+.tile__footer {
+    height: 60px;
+    max-height: 60px;
+}

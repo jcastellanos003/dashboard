@@ -1,0 +1,15 @@
+<tile
+    [template]="switchTemplate"
+    [footerInfo]="cardInfo">
+    <ng-template #switchTemplate>
+        <div class="cards-info card-switch">
+            <img [ngClass]="{
+                    'card-switch__img': true,
+                    'card-switch__img--off': !gearLanding,
+                    'card-switch__img--on': gearLanding
+                }"
+                [src]="switchImage"
+                (click)="onToggleGearLanding()">
+        </div>
+    </ng-template>
+</tile>

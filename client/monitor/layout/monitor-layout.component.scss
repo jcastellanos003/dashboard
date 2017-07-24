@@ -1,0 +1,17 @@
+@import '../../assets/css/variables';
+
+.monitor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.monitor__card--speed {
+    background-color: $speed-color;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}

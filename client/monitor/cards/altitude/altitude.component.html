@@ -1,0 +1,24 @@
+<tile
+    [template]="altitudeTemplate"
+    [footerInfo]="tileInfo">
+    <ng-template #altitudeTemplate>
+        <div class="cards-info card-altitude">
+            <gauge
+                [config]="gaugeConfig"
+                [value]="altitude.hundreds">
+            </gauge>
+            <div class="card-altitude__shadow-gauge">
+                <gauge
+                    [config]="gaugeConfigNeedle"
+                    [value]="altitude.thousands">
+                </gauge>
+            </div>
+            <div class="card-altitude__shadow-gauge">
+                <gauge
+                    [config]="gaugeConfigBox"
+                    [value]="currentAltitude">
+                </gauge>
+            </div>
+        </div>
+    </ng-template>
+</tile>

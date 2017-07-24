@@ -19,13 +19,14 @@ import { Component } from '@angular/core';
     .container-item--router {
         flex: 1;
         width: 100%;
-        max-width: 900px;
+        max-width: 1000px;
+        padding: 20px;
     }
     `],
     template: `
         <div class="container">
             <div class="container-item--header">
-                Header
+                <dashboard-header></dashboard-header>
             </div>
             <div class="container-item--router">
                 <router-outlet></router-outlet>

@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import { LayoutRoutingModule } from './layout.routes.module';
-import { SharedModule } from '../shared/shared.module';
+import { MonitorModule } from '../monitor/monitor.module';
 
-import { MonitorComponent } from './';
+import { HeaderComponent, LogoComponent } from './';
 
 @NgModule({
     declarations: [
-        MonitorComponent
+        HeaderComponent,
+        LogoComponent
     ],
     imports: [
-        LayoutRoutingModule,
-        SharedModule
+        RouterModule,
+        MonitorModule
+    ],
+    exports: [
+        HeaderComponent
     ]
 })
 export class LayoutModule {

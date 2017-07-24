@@ -1,0 +1,19 @@
+<tile
+    [template]="flapsTemplate"
+    [footerInfo]="tileInfo">
+    <ng-template #flapsTemplate>
+        <div class="cards-info card-flaps">
+            <div
+                class="card-flaps__arrow card-flaps__arrow--left"
+                (click)="flapChange(flapPosition - 1)">
+            </div>
+            <div class="card-flaps__position">
+                {{ flapPosition }}
+            </div>
+            <div
+                class="card-flaps__arrow card-flaps__arrow--right"
+                (click)="flapChange(flapPosition + 1)">
+            </div>
+        </div>
+    </ng-template>
+</tile>

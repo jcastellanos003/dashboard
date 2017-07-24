@@ -1,0 +1,15 @@
+@import '../../../assets/css/variables';
+
+.card-gear {
+    background-color: $gear-color;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.card-gear--on {
+    text-shadow: 0 0 8px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px $switch-on, 0 0 25px $switch-on;
+}
+
+.card-gear--off {
+    text-shadow: 0 0 8px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px $switch-off, 0 0 25px $switch-off;
+}

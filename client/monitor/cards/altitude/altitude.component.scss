@@ -1,0 +1,10 @@
+@import '../../../assets/css/variables';
+
+.card-altitude {
+    background-color: $altitude-color;
+    justify-content: center; 
+}
+
+.card-altitude__shadow-gauge {
+    position: absolute;
+}

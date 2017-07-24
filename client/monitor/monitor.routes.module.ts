@@ -9,5 +9,5 @@ import { MonitorComponent } from './';
     ]) ],
     exports: [ RouterModule ]
 })
-export class LayoutRoutingModule {
+export class MonitorRoutingModule {
 }

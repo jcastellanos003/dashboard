@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { routes } from './app.routes.module';
 import { DashboardApp } from './app.component';
+import { HeaderComponent, LogoComponent } from '../layout';
 
 describe('App Component', () => {
     let fixture: ComponentFixture<DashboardApp>;
@@ -18,7 +19,9 @@ describe('App Component', () => {
                 RouterTestingModule.withRoutes(routes)
             ],
             declarations: [
-                DashboardApp
+                DashboardApp,
+                HeaderComponent,
+                LogoComponent
             ]
         })
             .compileComponents();

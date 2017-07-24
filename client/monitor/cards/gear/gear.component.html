@@ -1,0 +1,14 @@
+<tile
+    [template]="gearTemplate"
+    [footerInfo]="tileInfo">
+    <ng-template #gearTemplate>
+        <div
+            [ngClass]="{
+                'cards-info card-gear': true,
+                'card-gear--on': isExtended,
+                'card-gear--off': !isExtended
+            }">
+            {{ gearPosition }}
+        </div>
+    </ng-template>
+</tile>

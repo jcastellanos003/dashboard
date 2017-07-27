@@ -1,23 +1,26 @@
 <section class="monitor">
     <speed
-        [currentSpeed]="currentSpeed">
+        [currentSpeed]="dashboard.telemetry.airspeed">
     </speed>
     <altitude
-        [currentAltitude]="currentAltitude">
+        [currentAltitude]="dashboard.telemetry.altitude">
     </altitude>
     <switch
-        [tileInfo]="gearInfo"
+        [gearLanding]="currentGear"
         (onToggleSwitch)="toggleGearLanding($event)">
     </switch>
     <gear
-        [tileInfo]="gearInfo">
+        [gearLanding]="currentGear">
     </gear>
     <flaps
-        [flapPosition]="flapPosition"
+        [flapPosition]="dashboard.control.flaps"
         (onFlapChange)="flapChange($event)">
     </flaps>
     <div>
-        <connection-status></connection-status>
+        <connection-status
+            [status]="currentStatus"
+            [milliseconds]="reconnectMilliseconds">
+        </connection-status>
         <statistics></statistics>
     </div>
 </section>

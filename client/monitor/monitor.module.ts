@@ -1,27 +1,24 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { MonitorRoutingModule } from './monitor.routes.module';
 import { SharedModule } from '../shared/shared.module';
 
 
-import { MonitorComponent, SpeedComponent, AltitudeComponent, StatisticsComponent,
-    SwitchComponent, GearComponent, FlapsComponent, ConnectionStateComponent
-} from './';
+import { monitorComponents, MonitorWsService, ConnectionStatusService } from './';
 
 @NgModule({
     declarations: [
-        MonitorComponent,
-        SpeedComponent,
-        AltitudeComponent,
-        SwitchComponent,
-        GearComponent,
-        FlapsComponent,
-        ConnectionStateComponent,
-        StatisticsComponent
+        ...monitorComponents
     ],
     imports: [
         MonitorRoutingModule,
-        SharedModule
+        SharedModule,
+        FormsModule
+    ],
+    providers: [
+        MonitorWsService,
+        ConnectionStatusService
     ]
 })
 export class MonitorModule {

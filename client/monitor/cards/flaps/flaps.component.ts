@@ -2,8 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 
-import 'rxjs/add/operator/debounceTime';
-
 import { FooterDefinition } from '../../../shared/models';
 import { SharedConstants } from '../../../shared/shared.constants';
 
@@ -44,7 +42,6 @@ export class FlapsComponent {
 
     private setEventHandler(): void {
         this.eventHandler
-            .debounceTime(300)
             .subscribe((pos: number) => this.onFlapChange.emit(pos));
     }
 }

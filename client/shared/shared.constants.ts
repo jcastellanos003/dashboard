@@ -8,11 +8,10 @@ export class SharedConstants {
         gearExtended: '../../assets/images/rim_green.svg',
         flaps: '../../assets/images/flaps.svg'
     };
-    public EXTENDED = 'Extended';
-    public RETRACTED = 'Retracted';
-    public GearLandingInfo: FooterDefinition = {
-        image: this.CARD_IMAGES.gearRetracted,
-        value: this.RETRACTED,
-        legend: 'Current Landing'
+    public CONN_STATUS = {
+        ONLINE: 'Online',
+        CONNECTING: 'Connecting',
+        OFFLINE: 'Offline'
     };
+    public URI_IMG = 'assets/images/';
 }

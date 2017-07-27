@@ -7,6 +7,12 @@ import { SharedConstants } from './shared.constants';
 
 import { GaugesModule } from 'ng-canvas-gauges/src';
 
+export const APP_HOST = 'interview.dev.ctx.ef.com/telemetry';
+
+export const AppConfigInjectables: any = {
+    provide: APP_HOST, useValue: APP_HOST
+};
+
 @NgModule({
     declarations: [
         TileComponent,
@@ -16,7 +22,8 @@ import { GaugesModule } from 'ng-canvas-gauges/src';
     ],
     providers: [
         SharedConstants,
-        UtilsService
+        UtilsService,
+        AppConfigInjectables
     ],
     imports: [
         CommonModule,

@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { FooterDefinition } from '../../../shared/models';
-import { SharedConstants } from '../../../shared/shared.constants';
-
 @Component({
     selector: 'gear',
     templateUrl: 'gear.component.html',
@@ -10,16 +7,9 @@ import { SharedConstants } from '../../../shared/shared.constants';
 })
 
 export class GearComponent {
-    @Input() tileInfo: FooterDefinition;
-
-    constructor(private sharedConstants: SharedConstants) {
-    }
+    @Input() gearLanding: boolean;
 
     get gearPosition(): string {
-        return this.isExtended ? 'On' : 'Off';
-    }
-
-    get isExtended(): boolean {
-        return this.tileInfo.value === this.sharedConstants.EXTENDED;
+        return this.gearLanding ? 'On' : 'Off';
     }
 }

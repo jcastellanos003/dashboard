@@ -4,13 +4,13 @@
         <div class="cards-info card-connection">
             <div class="card-connection__status-info">
                 <span>
-                    Offline
+                    {{ status }}
                 </span>
                 <div class="card-connection__status-footer">
                     <img
                         class="card-connection__img"
-                        src="../../../assets/images/radio.svg">
-                    Connection State
+                        [src]="statusImage">
+                    {{ connectionLabel }}
                 </div>
             </div>
         </div>

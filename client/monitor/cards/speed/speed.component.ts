@@ -33,12 +33,14 @@ export class SpeedComponent implements OnChanges {
     }
 
     private updateState(): void {
-        this.tileInfo.value = this.utilsService.calculateAverage(
-            this.tileInfo.value,
-            this.currentSpeed,
-            this.counter
-        );
-        this.counter++;
+        if (this.currentSpeed > 0) {
+            this.tileInfo.value = this.utilsService.calculateAverage(
+                this.tileInfo.value,
+                this.currentSpeed,
+                this.counter
+            );
+            this.counter++;
+        }
     }
 
     private setTileInfo(): void {

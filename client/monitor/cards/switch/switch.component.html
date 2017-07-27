@@ -1,6 +1,6 @@
-<tile
-    [template]="switchTemplate"
-    [footerInfo]="cardInfo">
+<landing
+    [gearLanding]="gearLanding"
+    [templateRef]="switchTemplate">
     <ng-template #switchTemplate>
         <div class="cards-info card-switch">
             <img [ngClass]="{
@@ -12,4 +12,4 @@
                 (click)="onToggleGearLanding()">
         </div>
     </ng-template>
-</tile>
+</landing>

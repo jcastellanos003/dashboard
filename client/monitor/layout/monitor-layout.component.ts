@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
 
-import { FooterDefinition } from '../../shared/models';
+import { NotificationEventEmitter, DashboardModel,
+    ControlMessage, Telemetry, MonitorService } from '../../shared/models';
+
 import { SharedConstants } from '../../shared/shared.constants';
+
+import { UtilsService } from '../../shared/services';
+import { MonitorWsService } from '../providers/monitor-ws.service';
+import { ConnectionStatusService } from '../providers/connection-status.service';
 
 @Component({
     selector: 'monitor',
@@ -12,58 +17,90 @@ import { SharedConstants } from '../../shared/shared.constants';
     styleUrls: ['./monitor-layout.component.scss']
 })
 
-export class MonitorComponent {
-    private currentSpeed: number = 0;
-    private currentAltitude: number = 0;
+export class MonitorComponent implements OnInit, OnDestroy {
+    private currentStatus: string;
+    private dashboard: DashboardModel<ControlMessage, Telemetry> = new DashboardModel();
+    private reconnectMilliseconds: number = 5000;
+    private onConnectionChanged: Observable<NotificationEventEmitter>;
+    private monitorService: MonitorService;
 
-    private counter: number = 0;
-    private counterAltitude: number = 0;
-
-    private gearInfo: FooterDefinition;
-
-    private flapPosition: number = 0;
-
-    constructor(private sharedConstants: SharedConstants) {
-        this.gearInfo = this.sharedConstants.GearLandingInfo;
-        Observable
-            .interval(2000)
-            .subscribe((value: number) => {
-                this.counter++;
-                if (this.counter <= 5) {
-                    this.currentSpeed = Math.floor((Math.random() * 420) + 0);
-                }
-            });
-        Observable
-            .interval(2000)
-            .subscribe((value: number) => {
-                this.counterAltitude++;
-                if (this.counterAltitude <= 5) {
-                    this.currentAltitude = Math.floor((Math.random() * 1000) + 0);
-                }
-            });
+    constructor(
+        monitorWsService: MonitorWsService,
+        private sharedConstants: SharedConstants,
+        private connectionStatusService: ConnectionStatusService,
+        private utilsService: UtilsService
+    ) {
+        this.monitorService = monitorWsService;
+        this.setInitialState();
     }
 
-    toggleGearLanding($event: FooterDefinition): void {
-        this.gearInfo = $event;
+    ngOnInit(): void {
+        this.subscribeMonitorData();
+        this.subscribeConnection();
     }
 
-    flapChange($event: any): void {
+    ngOnDestroy(): void {
+        this.connectionStatusService.takeUntilListener();
+    }
+
+    toggleGearLanding($event: number): void {
+        this.dashboard.control.landing_gear = $event;
+        this.sendMessage({ control: { landing_gear: $event } });
+    }
+
+    flapChange($event: number): void {
         if ($event >= 0 && $event <= 5) {
-            this.flapPosition = $event;
-            switch (this.flapPosition) {
-                case 0: this.currentSpeed = Math.floor((Math.random() * 100) + 320);
-                    break;
-                case 1: this.currentSpeed = Math.floor((Math.random() * 100) + 220);
-                    break;
-                case 2: this.currentSpeed = Math.floor((Math.random() * 100) + 120);
-                    break;
-                case 3: this.currentSpeed = Math.floor((Math.random() * 40) + 80);
-                    break;
-                case 4: this.currentSpeed = Math.floor((Math.random() * 40) + 40);
-                    break;
-                case 5: this.currentSpeed = Math.floor((Math.random() * 40) + 0);
-                    break;
-            }
+            this.dashboard.control.flaps = $event;
+            this.sendMessage({ control: { flaps: $event } });
         }
+    }
+
+    sendMessage(message: any): void {
+        this.monitorService.sendControlMessage(JSON.stringify(message));
+    }
+
+    private setInitialState(): void {
+        this.setDashboardInstance();
+        this.currentStatus = this.sharedConstants.CONN_STATUS.CONNECTING;
+        this.onConnectionChanged = this.connectionStatusService.getNotificationInstance();
+    }
+
+    private setDashboardInstance(): void {
+        this.dashboard.telemetry.airspeed = 0;
+        this.dashboard.telemetry.altitude = 0;
+        this.dashboard.control.flaps = 0;
+        this.dashboard.control.landing_gear = 0;
+    }
+
+    private subscribeMonitorData(): void {
+        this.monitorService.getData()
+            .subscribe((data: string) => {
+                if (!this.utilsService.testIncomingObject(data, this.dashboard)) return;
+                this.updateState(<any>JSON.parse(data));
+            });
+    }
+
+    private updateState(data: DashboardModel<ControlMessage, Telemetry>): void {
+        this.dashboard = data;
+    }
+
+    private subscribeConnection(): void {
+        this.onConnectionChanged.subscribe((status: NotificationEventEmitter) => {
+            this.currentStatus = status.action;
+            this.validateReconnection();
+        });
+    }
+
+    private validateReconnection(): void {
+        if (this.currentStatus === this.sharedConstants.CONN_STATUS.OFFLINE) {
+            setTimeout(() => {
+                this.currentStatus = this.sharedConstants.CONN_STATUS.CONNECTING;
+                this.subscribeMonitorData();
+            }, this.reconnectMilliseconds);
+        }
+    }
+
+    get currentGear(): boolean {
+        return !!(this.dashboard.control.landing_gear);
     }
 }

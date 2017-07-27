@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-import { FooterDefinition, GaugeUIConfig, Altitude } from '../../../shared/models';
+import { FooterDefinition, GaugeUIConfig, AltitudeNeedle } from '../../../shared/models';
 import { UtilsService } from '../../../shared/services';
 import { SharedConstants } from '../../../shared/shared.constants';
 
@@ -14,10 +14,11 @@ export class AltitudeComponent implements OnChanges {
     @Input() currentAltitude: number;
 
     private counter: number = 0;
-    private altitude: Altitude;
+    private altitude: AltitudeNeedle = new AltitudeNeedle();
     private tileInfo: FooterDefinition;
-    private gaugeConfig: GaugeUIConfig;
-    private gaugeConfigNeedle: GaugeUIConfig;
+    private gaugeConfigNeedleBase: GaugeUIConfig;
+    private gaugeConfigNeedleMiddle: GaugeUIConfig;
+    private gaugeConfigNeedleShort: GaugeUIConfig;
     private gaugeConfigBox: GaugeUIConfig;
 
     constructor(private sharedConstants: SharedConstants, private utilsService: UtilsService) {
@@ -36,13 +37,18 @@ export class AltitudeComponent implements OnChanges {
     }
 
     private updateState(): void {
-        this.altitude = this.utilsService.calculateAltitude(this.currentAltitude);
-        this.tileInfo.value = this.utilsService.calculateAverage(
-            this.tileInfo.value,
-            this.currentAltitude,
-            this.counter
-        );
-        this.counter++;
+        if (this.currentAltitude > 0 && this.currentAltitude < this.gaugeConfigBox.maxValue) {
+            this.altitude = this.utilsService.calculateAltitude(
+                this.currentAltitude,
+                this.gaugeConfigNeedleBase.maxValue
+            );
+            this.tileInfo.value = this.utilsService.calculateAverage(
+                this.tileInfo.value,
+                this.currentAltitude,
+                this.counter
+            );
+            this.counter++;
+        }
     }
 
     private setTileInfo(): void {
@@ -55,7 +61,7 @@ export class AltitudeComponent implements OnChanges {
     }
 
     private setGaugeUIInstance(): void {
-        this.gaugeConfig = {
+        this.gaugeConfigNeedleBase = {
             colorMajorTicks: '#fff',
             colorMinorTicks: '#fff',
             colorNumbers: '#2a2424',
@@ -72,7 +78,7 @@ export class AltitudeComponent implements OnChanges {
             needleEnd: 80,
             valueBox: false
         };
-        this.gaugeConfigNeedle = {
+        this.gaugeConfigNeedleMiddle = {
             colorMajorTicks: 'transparent',
             colorMinorTicks: 'transparent',
             colorNumbers: 'transparent',
@@ -86,12 +92,15 @@ export class AltitudeComponent implements OnChanges {
             title: '',
             units: '',
             needle: true,
-            needleEnd: 50,
+            needleEnd: 60,
             valueBox: false
         };
-        this.gaugeConfigBox = Object.assign({}, this.gaugeConfigNeedle, {
+        this.gaugeConfigNeedleShort = Object.assign({}, this.gaugeConfigNeedleMiddle, {
+            needleEnd: 40,
+        });
+        this.gaugeConfigBox = Object.assign({}, this.gaugeConfigNeedleMiddle, {
             needle: false,
-            maxValue: 11000,
+            maxValue: 100000,
             valueBox: true
         });
     }

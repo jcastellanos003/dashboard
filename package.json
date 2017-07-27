@@ -29,7 +29,15 @@
     },
     "moduleNameMapper": {
       "(.*)": "<rootDir>/client/$1"
-    }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "html"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|ng-canvas-gauges|canvas-gauges)"
+    ]
   },
   "dependencies": {
     "@angular/animations": "^4.3.1",

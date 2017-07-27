@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { FooterDefinition } from '../../../shared/models';
 import { SharedConstants } from '../../../shared/shared.constants';
 
 @Component({
@@ -9,38 +8,20 @@ import { SharedConstants } from '../../../shared/shared.constants';
     styleUrls: ['./switch.component.scss']
 })
 
-export class SwitchComponent implements OnInit {
-    @Input() tileInfo: FooterDefinition;
-    @Output() onToggleSwitch = new EventEmitter<FooterDefinition>();
-
-    private cardInfo: FooterDefinition;
-    private gearLanding: boolean = false;
-    private uriImg: string = 'assets/images/';
+export class SwitchComponent {
+    @Input() gearLanding: boolean;
+    @Output() onToggleSwitch = new EventEmitter<number>();
 
     constructor(private sharedConstants: SharedConstants) {
     }
 
-    ngOnInit(): void {
-        this.cardInfo = JSON.parse(JSON.stringify(this.tileInfo));
-    }
-
     onToggleGearLanding(): void {
-        this.updateState();
-        this.onToggleSwitch.emit(this.cardInfo);
+        this.onToggleSwitch.emit(this.gearLanding ? 0 : 1);
     }
 
     get switchImage(): string {
-        return this.gearLanding ? `${this.uriImg}switch_on.svg` : `${this.uriImg}switch_off.svg`;
-    }
-
-    private updateState(): void {
-        this.gearLanding = !this.gearLanding;
-        if (this.gearLanding) {
-            this.cardInfo.value = this.sharedConstants.EXTENDED;
-            this.cardInfo.image = this.sharedConstants.CARD_IMAGES.gearExtended;
-            return;
-        }
-        this.cardInfo.value = this.sharedConstants.RETRACTED;
-        this.cardInfo.image = this.sharedConstants.CARD_IMAGES.gearRetracted;
+        return this.gearLanding ?
+            `${this.sharedConstants.URI_IMG}switch_on.svg` :
+            `${this.sharedConstants.URI_IMG}switch_off.svg`;
     }
 }

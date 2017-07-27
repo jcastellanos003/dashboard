@@ -4,13 +4,19 @@
     <ng-template #altitudeTemplate>
         <div class="cards-info card-altitude">
             <gauge
-                [config]="gaugeConfig"
-                [value]="altitude.hundreds">
+                [config]="gaugeConfigNeedleBase"
+                [value]="altitude.big.value">
             </gauge>
             <div class="card-altitude__shadow-gauge">
                 <gauge
-                    [config]="gaugeConfigNeedle"
-                    [value]="altitude.thousands">
+                    [config]="gaugeConfigNeedleMiddle"
+                    [value]="altitude.middle.value">
+                </gauge>
+            </div>
+            <div class="card-altitude__shadow-gauge">
+                <gauge
+                    [config]="gaugeConfigNeedleShort"
+                    [value]="altitude.short.value">
                 </gauge>
             </div>
             <div class="card-altitude__shadow-gauge">

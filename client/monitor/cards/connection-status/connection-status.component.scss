@@ -6,15 +6,18 @@
 }
 
 .card-connection__status-info {
-    font-size: 4rem;
+    font-size: 3.6rem;
 }
 
 .card-connection__status-footer {
     color: $gray;
     font-size: .9rem;
+    width: 100%;
+    text-align: center;
 }
 
 .card-connection__img {
-    width: 25px;
+    width: 30px;
     vertical-align: middle;
+    margin-right: 5px;
 }

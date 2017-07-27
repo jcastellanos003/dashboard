@@ -14,7 +14,7 @@ export class AltitudeComponent implements OnChanges {
     @Input() currentAltitude: number;
 
     private counter: number = 0;
-    private altitude: AltitudeNeedle;
+    private altitude: AltitudeNeedle = new AltitudeNeedle();
     private tileInfo: FooterDefinition;
     private gaugeConfigNeedleBase: GaugeUIConfig;
     private gaugeConfigNeedleMiddle: GaugeUIConfig;
@@ -37,16 +37,18 @@ export class AltitudeComponent implements OnChanges {
     }
 
     private updateState(): void {
-        this.altitude = this.utilsService.calculateAltitude(
-            this.currentAltitude,
-            this.gaugeConfigNeedleBase.maxValue
-        );
-        this.tileInfo.value = this.utilsService.calculateAverage(
-            this.tileInfo.value,
-            this.currentAltitude,
-            this.counter
-        );
-        this.counter++;
+        if (this.currentAltitude > 0 && this.currentAltitude < this.gaugeConfigBox.maxValue) {
+            this.altitude = this.utilsService.calculateAltitude(
+                this.currentAltitude,
+                this.gaugeConfigNeedleBase.maxValue
+            );
+            this.tileInfo.value = this.utilsService.calculateAverage(
+                this.tileInfo.value,
+                this.currentAltitude,
+                this.counter
+            );
+            this.counter++;
+        }
     }
 
     private setTileInfo(): void {

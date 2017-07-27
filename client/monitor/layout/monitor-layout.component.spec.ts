@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
-
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
-import { MonitorComponent, SpeedComponent, AltitudeComponent, SwitchComponent,
-    ConnectionStateComponent, FlapsComponent, GearComponent, StatisticsComponent
-} from '../';
-import { TileComponent, TileFooterComponent, GaugeComponent, TileSmallComponent } from '../../shared/components';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+
+import { MonitorComponent, monitorComponents } from '../';
+
+import { MonitorWsService } from '../providers/monitor-ws.service';
+import { ConnectionStatusService } from '../providers/connection-status.service';
+
 import { SharedConstants } from '../../shared/shared.constants';
+import { SharedModule } from '../../shared/shared.module';
+import { TileComponent, GaugeComponent, TileFooterComponent, TileSmallComponent } from '../../shared/components';
 import { UtilsService } from '../../shared/services';
+
+import { MonitorWsServiceStub, UtilsServiceStub } from '../../test/sharedStubServices';
 
 @Component({
     selector: 'radial-gauge',
@@ -17,6 +24,12 @@ export class RadialGaugeComponent {
     constructor() {}
 }
 
+export const APP_HOST = 'interview.dev.ctx.ef.com/telemetry';
+
+export const AppConfigInjectables: any = {
+    provide: APP_HOST, useValue: APP_HOST
+};
+
 describe('MonitorComponent', () => {
     let fixture: ComponentFixture<MonitorComponent>;
     let component: MonitorComponent;
@@ -24,24 +37,26 @@ describe('MonitorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                MonitorComponent,
-                SpeedComponent,
-                AltitudeComponent,
                 TileComponent,
+                GaugeComponent,
                 TileFooterComponent,
                 TileSmallComponent,
-                GaugeComponent,
-                RadialGaugeComponent,
-                SwitchComponent,
-                ConnectionStateComponent,
-                FlapsComponent,
-                GearComponent,
-                StatisticsComponent
+                ...monitorComponents
             ],
             providers: [
+                {
+                    provide: MonitorWsService,
+                    useClass: MonitorWsServiceStub
+                },
+                {
+                    provide: UtilsService,
+                    useClass: UtilsServiceStub
+                },
                 SharedConstants,
-                UtilsService
-            ]
+                AppConfigInjectables,
+                ConnectionStatusService
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         })
             .compileComponents();
     }));
